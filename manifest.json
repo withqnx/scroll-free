@@ -1,0 +1,277 @@
+{
+  "fileKey": "B1zF1SNcDmjm107N5xz4xg",
+  "canvas": "312:2",
+  "generatedAt": "2026-06-25T14:10:17.711Z",
+  "datasets": [
+    {
+      "name": "DATA - 틈 클래식",
+      "slug": "data-틈-클래식",
+      "nodeId": "312:37",
+      "slots": [
+        {
+          "name": "가죽 재단",
+          "slug": "가죽-재단",
+          "type": "text",
+          "nodeId": "312:137",
+          "characters": "가죽 재단",
+          "order": 0
+        },
+        {
+          "name": "갑피 봉제",
+          "slug": "갑피-봉제",
+          "type": "text",
+          "nodeId": "312:126",
+          "characters": "갑피 봉제",
+          "order": 1
+        },
+        {
+          "name": "수작업 사선 매듭",
+          "slug": "수작업-사선-매듭",
+          "type": "text",
+          "nodeId": "312:140",
+          "characters": "수작업 사선 매듭",
+          "order": 2
+        },
+        {
+          "name": "세피 가죽 마감",
+          "slug": "세피-가죽-마감",
+          "type": "text",
+          "nodeId": "312:129",
+          "characters": "세피 가죽 마감",
+          "order": 3
+        },
+        {
+          "name": "중창 가죽 마감",
+          "slug": "중창-가죽-마감",
+          "type": "text",
+          "nodeId": "312:143",
+          "characters": "중창 가죽 마감",
+          "order": 4
+        },
+        {
+          "name": "밑창 재단",
+          "slug": "밑창-재단",
+          "type": "text",
+          "nodeId": "312:132",
+          "characters": "밑창 재단",
+          "order": 5
+        },
+        {
+          "name": "정밀 마감",
+          "slug": "정밀-마감",
+          "type": "text",
+          "nodeId": "312:144",
+          "characters": "정밀 마감",
+          "order": 6
+        },
+        {
+          "name": "밑창 고정",
+          "slug": "밑창-고정",
+          "type": "text",
+          "nodeId": "312:145",
+          "characters": "밑창 고정",
+          "order": 7
+        },
+        {
+          "name": "01 가죽재단",
+          "slug": "01-가죽재단",
+          "type": "image",
+          "nodeId": "312:134",
+          "imageRef": "d4a2b99d1737d864afe8463d15f039b74eb707d4",
+          "width": 1675,
+          "height": 939,
+          "frame": {
+            "name": "DATA - 틈 클래식",
+            "nodeId": "312:37"
+          },
+          "crop": null,
+          "order": 8,
+          "file": "assets/data-틈-클래식/01-가죽재단.png"
+        },
+        {
+          "name": "02 갑피봉제",
+          "slug": "02-갑피봉제",
+          "type": "image",
+          "nodeId": "312:123",
+          "imageRef": "ce8b2693199bca2076980a8b9790a8ce57ce6758",
+          "width": 1672,
+          "height": 941,
+          "frame": {
+            "name": "DATA - 틈 클래식",
+            "nodeId": "312:37"
+          },
+          "crop": null,
+          "order": 9,
+          "file": "assets/data-틈-클래식/02-갑피봉제.png"
+        },
+        {
+          "name": "03 수작업 사선 매듭",
+          "slug": "03-수작업-사선-매듭",
+          "type": "image",
+          "nodeId": "312:136",
+          "imageRef": "25955fbf422133f40ef3525dc15383606de28694",
+          "width": 1024,
+          "height": 576,
+          "frame": {
+            "name": "DATA - 틈 클래식",
+            "nodeId": "312:37"
+          },
+          "crop": null,
+          "order": 10,
+          "file": "assets/data-틈-클래식/03-수작업-사선-매듭.png"
+        },
+        {
+          "name": "04 세피 가죽 마감",
+          "slug": "04-세피-가죽-마감",
+          "type": "image",
+          "nodeId": "312:125",
+          "imageRef": "f3f130e3c249f2332c237bf7986ccd50e3a9cb54",
+          "width": 1024,
+          "height": 578,
+          "frame": {
+            "name": "DATA - 틈 클래식",
+            "nodeId": "312:37"
+          },
+          "crop": null,
+          "order": 11,
+          "file": "assets/data-틈-클래식/04-세피-가죽-마감.png"
+        },
+        {
+          "name": "05 중창 가죽 마감",
+          "slug": "05-중창-가죽-마감",
+          "type": "image",
+          "nodeId": "312:139",
+          "imageRef": "e22c4b9040d67ee5eb2c94a191be305d0b854bcf",
+          "width": 1774,
+          "height": 1000,
+          "frame": {
+            "name": "DATA - 틈 클래식",
+            "nodeId": "312:37"
+          },
+          "crop": null,
+          "order": 12,
+          "file": "assets/data-틈-클래식/05-중창-가죽-마감.png"
+        },
+        {
+          "name": "06 밑창 재단",
+          "slug": "06-밑창-재단",
+          "type": "image",
+          "nodeId": "312:128",
+          "imageRef": "9608587b6e3958b5dd2d5d1ac1115c156de00e4e",
+          "width": 1777,
+          "height": 1000,
+          "frame": {
+            "name": "DATA - 틈 클래식",
+            "nodeId": "312:37"
+          },
+          "crop": null,
+          "order": 13,
+          "file": "assets/data-틈-클래식/06-밑창-재단.png"
+        },
+        {
+          "name": "07 정밀 마감",
+          "slug": "07-정밀-마감",
+          "type": "image",
+          "nodeId": "312:142",
+          "imageRef": "490de8a08dfcade06e2de57b9155c5d32ca4d955",
+          "width": 1015,
+          "height": 570,
+          "frame": {
+            "name": "DATA - 틈 클래식",
+            "nodeId": "312:37"
+          },
+          "crop": null,
+          "order": 14,
+          "file": "assets/data-틈-클래식/07-정밀-마감.png"
+        },
+        {
+          "name": "08 밑창 고정",
+          "slug": "08-밑창-고정",
+          "type": "image",
+          "nodeId": "312:131",
+          "imageRef": "0cda1dee73a5855c0d71819893ee1a5f031ce0c6",
+          "width": 1672,
+          "height": 941,
+          "frame": {
+            "name": "DATA - 틈 클래식",
+            "nodeId": "312:37"
+          },
+          "crop": null,
+          "order": 15,
+          "file": "assets/data-틈-클래식/08-밑창-고정.png"
+        }
+      ]
+    },
+    {
+      "name": "DATA - 세종",
+      "slug": "data-세종",
+      "nodeId": "312:3",
+      "slots": [
+        {
+          "name": "01 맑은순은",
+          "slug": "01-맑은순은",
+          "type": "image",
+          "nodeId": "312:13",
+          "imageRef": "3f78688c1defeae1c659a31d553221b61453e341",
+          "width": 1920,
+          "height": 1080,
+          "frame": {
+            "name": "DATA - 세종",
+            "nodeId": "312:3"
+          },
+          "crop": null,
+          "order": 0,
+          "file": "assets/data-세종/01-맑은순은.png"
+        },
+        {
+          "name": "02 황금연두",
+          "slug": "02-황금연두",
+          "type": "image",
+          "nodeId": "312:25",
+          "imageRef": "101b8b79e761125a2ac427a60f434835967a2c6e",
+          "width": 1920,
+          "height": 1080,
+          "frame": {
+            "name": "DATA - 세종",
+            "nodeId": "312:3"
+          },
+          "crop": null,
+          "order": 1,
+          "file": "assets/data-세종/02-황금연두.png"
+        },
+        {
+          "name": "03 달빛초록",
+          "slug": "03-달빛초록",
+          "type": "image",
+          "nodeId": "312:27",
+          "imageRef": "704c614f650a2d40cf4e5d43ca684a6180a96444",
+          "width": 1920,
+          "height": 1080,
+          "frame": {
+            "name": "DATA - 세종",
+            "nodeId": "312:3"
+          },
+          "crop": null,
+          "order": 2,
+          "file": "assets/data-세종/03-달빛초록.png"
+        },
+        {
+          "name": "04 검은진주",
+          "slug": "04-검은진주",
+          "type": "image",
+          "nodeId": "312:35",
+          "imageRef": "cf1e346dd428e91b96dfc3f482047dd8722eaceb",
+          "width": 1920,
+          "height": 1080,
+          "frame": {
+            "name": "DATA - 세종",
+            "nodeId": "312:3"
+          },
+          "crop": null,
+          "order": 3,
+          "file": "assets/data-세종/04-검은진주.png"
+        }
+      ]
+    }
+  ]
+}

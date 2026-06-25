@@ -1,0 +1,10 @@
+{
+  "scale": 1,
+  "format": "png",
+  "out": "assets/발옷",
+  "items": [
+    { "id": "312:1386", "name": "toon1-zoom" },
+    { "id": "312:1390", "name": "toon2-zoom" },
+    { "id": "312:1396", "name": "toon3-zoom" }
+  ]
+}
