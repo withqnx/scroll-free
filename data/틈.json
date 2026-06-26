@@ -1,0 +1,16 @@
+{
+  "template": "stepper",
+  "title": "틈 클래식",
+  "assetBase": "../assets/data-틈-클래식/",
+  "aspect": "16 / 9",
+  "steps": [
+    { "label": "가죽 재단", "img": "01-가죽재단.png" },
+    { "label": "갑피 봉제", "img": "02-갑피봉제.png" },
+    { "label": "수작업 사선 매듭", "img": "03-수작업-사선-매듭.png" },
+    { "label": "세피 가죽 마감", "img": "04-세피-가죽-마감.png" },
+    { "label": "중창 가죽 마감", "img": "05-중창-가죽-마감.png" },
+    { "label": "밑창 재단", "img": "06-밑창-재단.png" },
+    { "label": "정밀 마감", "img": "07-정밀-마감.png" },
+    { "label": "밑창 고정", "img": "08-밑창-고정.png" }
+  ]
+}

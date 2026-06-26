@@ -1,0 +1,16 @@
+{
+  "template": "gallery",
+  "title": "꽃셔츠 옵션",
+  "count": 20,
+  "cols": 4,
+  "rows": 5,
+  "modelBase": "../assets/옵션/models/",
+  "patternBase": "../assets/옵션/patterns/",
+  "modelPrefix": "md-",
+  "patternPrefix": "pt-",
+  "modelObjectPosition": "center 16%",
+  "patternObjectPosition": "center",
+  "patternObjectPositionByIndex": { "17": "left center", "18": "left center", "19": "left center", "20": "left center" },
+  "captionPrefix": "OPTION",
+  "sub": "꽃셔츠 · 20 옵션"
+}

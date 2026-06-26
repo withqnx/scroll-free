@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>소재</title>
+<style>
+  :root {
+    --bg: #11110f; --text: #f4f3ee; --border: rgba(255,255,255,0.16);
+    --accent: #e9e4d0; --accent-ink: #11110f; --radius: 16px;
+    --font: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; display: flex; flex-direction: column; min-height: 100%; overflow: hidden; }
+  .home { position: fixed; top: 18px; left: 18px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(0,0,0,0.4); border: 1px solid var(--border); color: var(--text); text-decoration: none; font-size: 1.1rem; z-index: 30; }
+  .home:hover { background: rgba(0,0,0,0.7); }
+  .accordion { flex: 1; display: flex; gap: 10px; padding: clamp(14px, 2.5vw, 34px); height: 100vh; }
+  .panel { position: relative; flex: 1; border-radius: var(--radius); overflow: hidden; cursor: pointer; background-size: cover; background-position: center; box-shadow: 0 10px 30px -12px rgba(0,0,0,0.7); transition: flex 0.55s cubic-bezier(.22,.61,.36,1); min-width: 0; }
+  .panel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0.5) 100%); transition: background 0.5s ease; }
+  .panel.active { flex: 5.5; }
+  .panel.active::after { background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.15) 100%); }
+  .tab { position: absolute; bottom: 22px; left: 0; right: 0; text-align: center; z-index: 2; font-size: 1.15rem; font-weight: 700; writing-mode: vertical-rl; margin: 0 auto; color: #fff; transition: opacity 0.3s ease; }
+  .panel.active .tab { opacity: 0; }
+  .content { position: absolute; left: clamp(20px, 3vw, 44px); bottom: clamp(18px, 3vw, 40px); width: clamp(280px, 40vw, 560px); z-index: 3; opacity: 0; transform: translateX(26px); pointer-events: none; color: #fff; }
+  .panel.active .content { animation: textIn 0.5s ease 0.12s forwards; pointer-events: auto; }
+  .panel.leaving .content { animation: textOut 0.32s ease forwards; }
+  @keyframes textIn { from { opacity: 0; transform: translateX(26px); } to { opacity: 1; transform: translateX(0); } }
+  @keyframes textOut { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(-26px); } }
+  .content h2 { font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 800; margin-bottom: 0.7rem; letter-spacing: -0.01em; }
+  .content p { font-size: clamp(0.95rem, 1.25vw, 1.15rem); line-height: 1.7; color: #ececec; max-width: 60ch; white-space: pre-line; }
+  .badge { display: inline-block; margin-top: 1rem; position: relative; font-size: 0.85rem; font-weight: 700; color: var(--accent-ink); background: var(--accent); padding: 0.35rem 0.8rem; border-radius: 999px; cursor: help; }
+  .badge .tip { position: absolute; bottom: calc(100% + 10px); left: 0; width: 320px; background: rgba(20,20,18,0.97); border: 1px solid rgba(255,255,255,0.15); color: #ece9e0; font-weight: 400; font-size: 0.85rem; line-height: 1.6; padding: 0.8rem 1rem; border-radius: 12px; opacity: 0; transform: translateY(6px); transition: opacity 0.2s, transform 0.2s; pointer-events: none; white-space: pre-line; }
+  .badge:hover .tip { opacity: 1; transform: translateY(0); }
+  @media (max-width: 760px) { .accordion { flex-direction: column; height: auto; min-height: 100vh; } .panel { min-height: 70px; } .panel.active { flex: 6; min-height: 50vh; } .tab { writing-mode: horizontal-tb; bottom: 14px; } .content { width: auto; right: 20px; } }
+</style>
+</head>
+<body>
+  <a class="home" href="../index.html" title="홈으로">←</a>
+  <div class="accordion" id="accordion"></div>
+
+  <script src="../lib/load-config.js"></script>
+  <script>
+    loadConfig('accordion', (cfg) => {
+      document.title = '소재 · ' + (cfg.title || '');
+      const root = document.getElementById('accordion');
+      const panels = cfg.panels.map((p, i) => {
+        const el = document.createElement('div');
+        el.className = 'panel' + (i === 0 ? ' active' : '');
+        el.style.backgroundImage = `url('${cfg.assetBase}${p.img}')`;
+        let badge = '';
+        if (p.badge) badge = `<span class="badge">${p.badge.label}<span class="tip">${p.badge.tip}</span></span>`;
+        el.innerHTML = `<div class="tab">${p.tab}</div><div class="content"><h2>${p.title}</h2><p>${p.desc}</p>${badge}</div>`;
+        root.appendChild(el);
+        return el;
+      });
+      function activate(p) {
+        const prev = panels.find((x) => x.classList.contains('active'));
+        if (prev === p) return;
+        if (prev) { prev.classList.remove('active'); prev.classList.add('leaving'); setTimeout(() => prev.classList.remove('leaving'), 340); }
+        p.classList.add('active');
+      }
+      panels.forEach((p) => { p.addEventListener('mouseenter', () => activate(p)); p.addEventListener('click', () => activate(p)); });
+    });
+  </script>
+</body>
+</html>

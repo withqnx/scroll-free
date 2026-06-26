@@ -1,0 +1,13 @@
+{
+  "template": "picker",
+  "title": "세종",
+  "assetBase": "../assets/data-세종/",
+  "aspect": "16 / 9",
+  "stageBg": "#2b2c30",
+  "items": [
+    { "label": "맑은순은", "color": "linear-gradient(145deg,#ededed,#c2c2c2)", "img": "01-맑은순은.png" },
+    { "label": "황금연두", "color": "#e3ec39", "img": "02-황금연두.png" },
+    { "label": "달빛초록", "color": "#4e9b39", "img": "03-달빛초록.png" },
+    { "label": "검은진주", "color": "#2c2c2c", "img": "04-검은진주.png" }
+  ]
+}

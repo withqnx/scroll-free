@@ -1,0 +1,8 @@
+{
+  "template": "opening",
+  "title": "발옷 시즌2",
+  "assetBase": "../assets/발옷/",
+  "aspect": "16 / 9",
+  "frameBg": "#d6d5d1",
+  "slides": ["toon1-full.png", "toon2-full.png", "toon3-full.png"]
+}

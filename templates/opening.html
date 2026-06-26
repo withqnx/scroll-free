@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>오프닝</title>
+<style>
+  :root {
+    --bg: #e7e0d4; --surface: #f6f2ea; --border: #e0dbd0; --text: #1d1b18; --muted: #8a857c;
+    --radius: 30px; --frame-bg: #d6d5d1;
+    --font: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow: hidden; }
+  .home { position: fixed; top: 18px; left: 18px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); color: var(--muted); text-decoration: none; font-size: 1.1rem; z-index: 50; }
+  .home:hover { color: var(--text); }
+  .carousel { display: flex; height: 100vh; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; cursor: grab; align-items: center; gap: 2.5vw; padding: 0 7vw; }
+  .carousel::-webkit-scrollbar { display: none; }
+  .carousel.dragging { cursor: grabbing; scroll-behavior: auto; }
+  .slide { flex: 0 0 84vw; height: 86vh; scroll-snap-align: center; }
+  .frame { width: 100%; height: 100%; background: var(--frame-bg); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: 0 30px 70px -30px rgba(0,0,0,0.35); overflow: hidden; display: flex; align-items: center; justify-content: center; }
+  .frame img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .hint { position: fixed; right: 26px; top: 50%; font-size: 2.6rem; opacity: 0.22; z-index: 40; pointer-events: none; animation: nudge 1.6s ease-in-out infinite; }
+  @keyframes nudge { 0%,100% { transform: translateX(0); opacity: 0.16; } 50% { transform: translateX(14px); opacity: 0.3; } }
+  .hint.hide { opacity: 0; transition: opacity 0.4s; }
+  @media (max-width: 760px) { .slide { flex-basis: 88vw; } }
+</style>
+</head>
+<body>
+  <a class="home" href="../index.html" title="홈으로">←</a>
+  <div class="carousel" id="carousel"></div>
+  <div class="hint" id="hint">👉</div>
+
+  <script src="../lib/load-config.js"></script>
+  <script>
+    loadConfig('opening', (cfg) => {
+      document.title = '오프닝 · ' + (cfg.title || '');
+      if (cfg.frameBg) document.documentElement.style.setProperty('--frame-bg', cfg.frameBg);
+      const carousel = document.getElementById('carousel');
+      cfg.slides.forEach((src) => {
+        const slide = document.createElement('div');
+        slide.className = 'slide';
+        slide.innerHTML = `<div class="frame"><img src="${cfg.assetBase}${src}" alt=""></div>`;
+        carousel.appendChild(slide);
+      });
+      const slides = [...document.querySelectorAll('.slide')];
+      const hint = document.getElementById('hint');
+      carousel.addEventListener('scroll', () => { if (carousel.scrollLeft > 40) hint.classList.add('hide'); }, { passive: true });
+      let down = false, startX = 0, startScroll = 0;
+      carousel.addEventListener('mousedown', (e) => { down = true; startX = e.pageX; startScroll = carousel.scrollLeft; carousel.classList.add('dragging'); });
+      window.addEventListener('mouseup', () => { down = false; carousel.classList.remove('dragging'); });
+      window.addEventListener('mousemove', (e) => { if (down) carousel.scrollLeft = startScroll - (e.pageX - startX); });
+      window.addEventListener('keydown', (e) => {
+        const w = slides[0].offsetWidth + window.innerWidth * 0.025;
+        if (e.key === 'ArrowRight') carousel.scrollBy({ left: w, behavior: 'smooth' });
+        if (e.key === 'ArrowLeft') carousel.scrollBy({ left: -w, behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>

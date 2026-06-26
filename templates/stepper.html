@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>제조 과정</title>
+<style>
+  :root {
+    --bg: #fff; --surface: #fff; --text: #111; --muted: #b0b0b0; --border: #e2e2e2;
+    --accent: #1a1a1a; --radius: 18px;
+    --font: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; padding: 2.4rem clamp(1rem, 4vw, 3.5rem) 3rem; }
+  .home { position: fixed; top: 18px; left: 18px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); color: var(--muted); text-decoration: none; font-size: 1.1rem; z-index: 30; }
+  .home:hover { color: var(--text); }
+  .steps { display: flex; max-width: 1200px; margin: 0.5rem auto 2rem; }
+  .step { position: relative; flex: 1 1 0; display: flex; flex-direction: column; align-items: center; background: none; border: none; cursor: pointer; padding: 0; }
+  .step::before, .step::after { content: ""; position: absolute; top: 23px; height: 2px; width: 50%; background: var(--border); z-index: 0; }
+  .step::before { left: 0; } .step::after { right: 0; }
+  .step:first-child::before { display: none; } .step:last-child::after { display: none; }
+  .circle { width: 46px; height: 46px; border-radius: 50%; border: 2px solid var(--border); background: var(--surface); display: flex; align-items: center; justify-content: center; font-size: 0.92rem; font-weight: 600; color: var(--muted); z-index: 2; transition: all 0.18s ease; }
+  .name { margin-top: 0.8rem; font-size: 0.92rem; color: var(--muted); font-weight: 500; text-align: center; white-space: nowrap; transition: color 0.18s ease; }
+  .step:hover .circle { border-color: color-mix(in srgb, var(--accent) 55%, var(--border)); color: var(--text); }
+  .step.active .circle { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 0 4px var(--surface), 0 0 0 6px var(--accent); }
+  .step.active .name { color: var(--text); font-weight: 700; }
+  .stage { position: relative; max-width: 1200px; margin: 0 auto; aspect-ratio: 16 / 9; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: 0 12px 30px -14px rgba(0,0,0,0.25); }
+  .stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0; transition: opacity 0.4s ease; }
+  .stage img.show { opacity: 1; }
+  @media (max-width: 760px) { .name { font-size: 0.66rem; } .circle { width: 38px; height: 38px; font-size: 0.78rem; } .step::before, .step::after { top: 19px; } }
+</style>
+</head>
+<body>
+  <a class="home" href="../index.html" title="홈으로">←</a>
+  <nav class="steps" id="steps"></nav>
+  <div class="stage" id="stage"></div>
+
+  <script src="../lib/load-config.js"></script>
+  <script>
+    loadConfig('stepper', (cfg) => {
+      document.title = '제조 과정 · ' + (cfg.title || '');
+      const steps = document.getElementById('steps');
+      const stage = document.getElementById('stage');
+      if (cfg.aspect) stage.style.aspectRatio = cfg.aspect;
+      const layers = {};
+      const els = cfg.steps.map((st, i) => {
+        const b = document.createElement('button');
+        b.className = 'step' + (i === 0 ? ' active' : '');
+        b.innerHTML = `<span class="circle">${String(i + 1).padStart(2, '0')}</span><span class="name">${st.label}</span>`;
+        steps.appendChild(b);
+        const img = document.createElement('img');
+        img.src = cfg.assetBase + st.img; img.alt = st.label;
+        stage.appendChild(img); layers[i] = img;
+        return b;
+      });
+      function select(i) {
+        els.forEach((s, j) => s.classList.toggle('active', i === j));
+        Object.values(layers).forEach((im) => im.classList.remove('show'));
+        layers[i].classList.add('show');
+      }
+      els.forEach((s, i) => { s.addEventListener('mouseenter', () => select(i)); s.addEventListener('click', () => select(i)); s.addEventListener('focus', () => select(i)); });
+      select(0);
+    });
+  </script>
+</body>
+</html>
