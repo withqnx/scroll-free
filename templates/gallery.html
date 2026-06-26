@@ -49,8 +49,19 @@
       const grid = document.getElementById('grid');
       const stage = document.getElementById('stage');
       const caption = document.getElementById('caption');
-      grid.style.gridTemplateColumns = `repeat(${cfg.cols}, 1fr)`;
-      grid.style.gridTemplateRows = `repeat(${cfg.rows}, 1fr)`;
+      // 균일 그리드(cols/rows) 또는 행별 칸 수가 다른 배열(rowPattern: 예 [3,3,3,3,4,4])
+      let spanByIndex = null;
+      if (cfg.rowPattern) {
+        const gcd = (a, b) => (b ? gcd(b, a % b) : a), lcm = (a, b) => (a / gcd(a, b)) * b;
+        const L = cfg.rowPattern.reduce((a, b) => lcm(a, b));
+        grid.style.gridTemplateColumns = `repeat(${L}, 1fr)`;
+        grid.style.gridTemplateRows = `repeat(${cfg.rowPattern.length}, 1fr)`;
+        spanByIndex = [];
+        cfg.rowPattern.forEach((c) => { for (let k = 0; k < c; k++) spanByIndex.push(L / c); });
+      } else {
+        grid.style.gridTemplateColumns = `repeat(${cfg.cols}, 1fr)`;
+        grid.style.gridTemplateRows = `repeat(${cfg.rows}, 1fr)`;
+      }
 
       const layerA = document.createElement('img'), layerB = document.createElement('img');
       [layerA, layerB].forEach((l) => { l.style.objectPosition = cfg.modelObjectPosition || 'center 16%'; });
@@ -65,6 +76,7 @@
         t.className = 'thumb'; t.dataset.n = i;
         const pos = posByIndex[String(i)] || cfg.patternObjectPosition || 'center';
         t.innerHTML = `<span class="num">${pad(i)}</span><img src="${cfg.patternBase}${cfg.patternPrefix}${pad(i)}.png" alt="옵션 ${pad(i)}" style="object-position:${pos}">`;
+        if (spanByIndex) t.style.gridColumn = `span ${spanByIndex[i - 1]}`;
         grid.appendChild(t); thumbs.push(t);
       }
       const setCap = (i) => { caption.innerHTML = `${cfg.captionPrefix} ${pad(i)}<span>${cfg.sub || ''}</span>`; };

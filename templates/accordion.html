@@ -32,7 +32,14 @@
   .badge { display: inline-block; margin-top: 1rem; position: relative; font-size: 0.85rem; font-weight: 700; color: var(--accent-ink); background: var(--accent); padding: 0.35rem 0.8rem; border-radius: 999px; cursor: help; }
   .badge .tip { position: absolute; bottom: calc(100% + 10px); left: 0; width: 320px; background: rgba(20,20,18,0.97); border: 1px solid rgba(255,255,255,0.15); color: #ece9e0; font-weight: 400; font-size: 0.85rem; line-height: 1.6; padding: 0.8rem 1rem; border-radius: 12px; opacity: 0; transform: translateY(6px); transition: opacity 0.2s, transform 0.2s; pointer-events: none; white-space: pre-line; }
   .badge:hover .tip { opacity: 1; transform: translateY(0); }
-  @media (max-width: 760px) { .accordion { flex-direction: column; height: auto; min-height: 100vh; } .panel { min-height: 70px; } .panel.active { flex: 6; min-height: 50vh; } .tab { writing-mode: horizontal-tb; bottom: 14px; } .content { width: auto; right: 20px; } }
+  @media (max-width: 760px) {
+    .accordion { flex-direction: column; height: 100vh; overflow-y: auto; scroll-snap-type: y proximity; -webkit-overflow-scrolling: touch; gap: 12px; padding: 12px; }
+    .panel, .panel.active { flex: none; height: 86vh; scroll-snap-align: center; transition: none; }
+    /* 모바일: 각 패널이 한 화면 = 소재 하나. 스크롤하면 다음 소재로. 텍스트 항상 표시 */
+    .panel::after { background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.05) 55%, rgba(0,0,0,0.2) 100%); }
+    .tab { display: none; }
+    .content { left: 24px; right: 24px; bottom: 36px; width: auto; opacity: 1; transform: none; pointer-events: auto; animation: none !important; }
+  }
 </style>
 </head>
 <body>
@@ -60,6 +67,7 @@
         if (prev) { prev.classList.remove('active'); prev.classList.add('leaving'); setTimeout(() => prev.classList.remove('leaving'), 340); }
         p.classList.add('active');
       }
+      // 데스크톱: 호버/클릭으로 패널 확대. (모바일은 스크롤-스냅으로 각 소재가 한 화면씩 — CSS에서 처리)
       panels.forEach((p) => { p.addEventListener('mouseenter', () => activate(p)); p.addEventListener('click', () => activate(p)); });
     });
   </script>
