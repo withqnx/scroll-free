@@ -4,115 +4,44 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>많은 옵션 · 꽃셔츠</title>
+<link rel="stylesheet" href="../assets/themes.css" />
 <style>
+  :root {
+    --bg: #f3f1ec; --surface: #ffffff; --surface2: #eceae4;
+    --text: #1a1a1a; --muted: #8a8a82; --border: #e6e4dd;
+    --accent: #1a1a1a; --accent-ink: #fff; --radius: 10px; --radius-sm: 8px;
+    --shadow: 0 10px 30px -12px rgba(0,0,0,0.2);
+    --font: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+    --font-head: var(--font);
+  }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; }
-  body {
-    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
-      "Segoe UI", Roboto, sans-serif;
-    background: #f3f1ec;
-    color: #1a1a1a;
-    -webkit-font-smoothing: antialiased;
-    height: 100vh;
-    overflow: hidden;
-  }
-  .home {
-    position: fixed; top: 18px; left: 18px;
-    width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
-    border-radius: 50%; background: rgba(255,255,255,0.9); border: 1px solid #e0ded7;
-    color: #555; text-decoration: none; font-size: 1.1rem; z-index: 30;
-  }
-  .home:hover { background: #fff; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; height: 100vh; overflow: hidden; }
+  .home { position: fixed; top: 18px; left: 18px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); color: var(--muted); text-decoration: none; font-size: 1.1rem; z-index: 30; }
+  .home:hover { color: var(--text); }
 
-  .layout {
-    display: grid;
-    grid-template-columns: 1.35fr 1fr;
-    height: 100vh;
-  }
+  .layout { display: grid; grid-template-columns: 1.35fr 1fr; height: 100vh; }
 
-  /* 왼쪽 — 모델 스테이지 */
-  .stage {
-    position: relative;
-    background: radial-gradient(120% 90% at 50% 0%, #ffffff, #eceae4);
-    overflow: hidden;
-  }
-  .stage img {
-    position: absolute;
-    inset: 0;
-    width: 100%; height: 100%;
-    object-fit: contain;
-    object-position: center bottom;
-    opacity: 0;
-  }
-  .stage img.show {
-    opacity: 1;
-    animation: approach 0.85s cubic-bezier(.16,.84,.3,1) both;
-  }
-  @keyframes approach {
-    0%   { opacity: 0; transform: scale(0.88) translateY(14px); filter: blur(3px); }
-    55%  { opacity: 1; filter: blur(0); }
-    80%  { transform: scale(1.012) translateY(0); }
-    100% { opacity: 1; transform: scale(1) translateY(0); }
-  }
-  .caption {
-    position: absolute;
-    left: 32px; bottom: 28px;
-    z-index: 4;
-    font-size: 1.5rem;
-    font-weight: 800;
-    letter-spacing: -0.01em;
-    color: #1a1a1a;
-    text-shadow: 0 1px 10px rgba(255,255,255,0.6);
-  }
-  .caption span { font-size: 0.95rem; font-weight: 600; color: #8a8a82; display: block; }
+  /* 왼쪽 — 모델 스테이지 (여백 없이 꽉 차게) */
+  .stage { position: relative; background: radial-gradient(120% 90% at 50% 0%, var(--surface), var(--surface2)); overflow: hidden; }
+  .stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 16%; opacity: 0; }
+  .stage img.show { opacity: 1; animation: approach 0.85s cubic-bezier(.16,.84,.3,1) both; }
+  @keyframes approach { 0% { opacity: 0; transform: scale(0.9) translateY(12px); filter: blur(3px); } 55% { opacity: 1; filter: blur(0); } 80% { transform: scale(1.012); } 100% { opacity: 1; transform: scale(1); } }
+  .caption { position: absolute; left: 32px; bottom: 28px; z-index: 4; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.01em; color: var(--text); text-shadow: 0 1px 12px rgba(255,255,255,0.55); }
+  .caption span { font-size: 0.95rem; font-weight: 600; color: var(--muted); display: block; }
 
-  /* 오른쪽 — 바둑판 썸네일 */
-  .grid-wrap {
-    background: #fff;
-    border-left: 1px solid #e6e4dd;
-    overflow-y: auto;
-    padding: clamp(12px, 1.4vw, 22px);
-  }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: clamp(6px, 0.7vw, 12px);
-  }
-  .thumb {
-    position: relative;
-    aspect-ratio: 1 / 1;
-    border-radius: 10px;
-    overflow: hidden;
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: transform 0.18s ease, border-color 0.18s ease;
-  }
-  .thumb img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
-  }
-  .thumb .num {
-    position: absolute; top: 5px; left: 7px;
-    font-size: 0.7rem; font-weight: 700; color: #fff;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
-    z-index: 2;
-  }
+  /* 오른쪽 — 바둑판 (스크롤 없이 높이를 꽉 채움 → 모델샷과 Y길이 동일) */
+  .grid-wrap { background: var(--surface); border-left: 1px solid var(--border); padding: clamp(10px, 1.2vw, 18px); overflow: hidden; }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(5, 1fr); gap: clamp(6px, 0.7vw, 12px); height: 100%; }
+  .thumb { position: relative; border-radius: var(--radius); overflow: hidden; cursor: pointer; border: 2px solid transparent; transition: transform 0.18s ease, border-color 0.18s ease; min-height: 0; }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s ease; }
+  .thumb .num { position: absolute; top: 5px; left: 7px; font-size: 0.7rem; font-weight: 700; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.6); z-index: 2; }
   .thumb:hover { transform: translateY(-2px); }
   .thumb:hover img { transform: scale(1.08); }
-  .thumb.active { border-color: #1a1a1a; }
-  .thumb.active::after {
-    content: ""; position: absolute; inset: 0;
-    box-shadow: inset 0 0 0 2px #fff;
-    border-radius: 8px;
-  }
+  .thumb.active { border-color: var(--accent); }
+  .thumb.active::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 2px var(--surface); border-radius: calc(var(--radius) - 2px); }
 
-  @media (max-width: 820px) {
-    .layout { grid-template-columns: 1fr; grid-template-rows: 1fr auto; }
-    .grid { grid-template-columns: repeat(5, 1fr); }
-    .grid-wrap { max-height: 38vh; border-left: none; border-top: 1px solid #e6e4dd; }
-  }
+  @media (max-width: 820px) { .layout { grid-template-columns: 1fr; grid-template-rows: 1fr auto; } .grid { grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(4, 1fr); height: 38vh; } .grid-wrap { border-left: none; border-top: 1px solid var(--border); } }
 </style>
 </head>
 <body>
@@ -122,9 +51,7 @@
     <div class="stage" id="stage">
       <div class="caption" id="caption">OPTION 01<span>꽃셔츠 · 20 옵션</span></div>
     </div>
-    <div class="grid-wrap">
-      <div class="grid" id="grid"></div>
-    </div>
+    <div class="grid-wrap"><div class="grid" id="grid"></div></div>
   </div>
 
   <script>
@@ -132,28 +59,23 @@
     const PATTERNS = '../assets/옵션/patterns/';
     const N = 20;
     const pad = (n) => String(n).padStart(2, '0');
-
     const grid = document.getElementById('grid');
     const stage = document.getElementById('stage');
     const caption = document.getElementById('caption');
 
-    // 두 레이어로 부드러운 교차(다가오는 모션)
     const layerA = document.createElement('img');
     const layerB = document.createElement('img');
     stage.prepend(layerB); stage.prepend(layerA);
     let front = layerA, back = layerB;
 
-    // 모델 프리로드(캐시)
     for (let i = 1; i <= N; i++) { const im = new Image(); im.src = MODELS + 'md-' + pad(i) + '.png'; }
 
     const thumbs = [];
     for (let i = 1; i <= N; i++) {
       const t = document.createElement('div');
-      t.className = 'thumb';
-      t.dataset.n = i;
-      t.innerHTML = `<span class="num">${pad(i)}</span><img src="${PATTERNS}pt-${pad(i)}.png" alt="옵션 ${pad(i)}" loading="lazy">`;
-      grid.appendChild(t);
-      thumbs.push(t);
+      t.className = 'thumb'; t.dataset.n = i;
+      t.innerHTML = `<span class="num">${pad(i)}</span><img src="${PATTERNS}pt-${pad(i)}.png" alt="옵션 ${pad(i)}">`;
+      grid.appendChild(t); thumbs.push(t);
     }
 
     function select(i) {
@@ -161,22 +83,12 @@
       caption.innerHTML = `OPTION ${pad(i)}<span>꽃셔츠 · 20 옵션</span>`;
       const src = MODELS + 'md-' + pad(i) + '.png';
       const img = new Image();
-      img.onload = () => {
-        back.src = src;
-        back.classList.add('show');
-        front.classList.remove('show');
-        [front, back] = [back, front]; // swap
-      };
+      img.onload = () => { back.src = src; back.classList.add('show'); front.classList.remove('show'); [front, back] = [back, front]; };
       img.src = src;
     }
-
-    thumbs.forEach((t) => {
-      const i = +t.dataset.n;
-      t.addEventListener('mouseenter', () => select(i));
-      t.addEventListener('click', () => select(i));
-    });
-
+    thumbs.forEach((t) => { const i = +t.dataset.n; t.addEventListener('mouseenter', () => select(i)); t.addEventListener('click', () => select(i)); });
     select(1);
   </script>
+  <script src="../assets/theme-switch.js"></script>
 </body>
 </html>

@@ -4,166 +4,72 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>오프닝 · 발옷 시즌2</title>
+<link rel="stylesheet" href="../assets/themes.css" />
 <style>
+  :root {
+    --bg: #e7e0d4; --surface: #f6f2ea; --surface2: #efeae0;
+    --text: #1d1b18; --muted: #8a857c; --border: #e0dbd0;
+    --accent: #e8402f; --accent-ink: #fff; --radius: 30px; --radius-sm: 14px;
+    --shadow: 0 30px 70px -30px rgba(0,0,0,0.35);
+    --font: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+    --font-head: var(--font);
+    --marker: #e8402f;
+  }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; }
-  body {
-    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
-      "Segoe UI", Roboto, sans-serif;
-    background: #f0ede6;
-    color: #1d1b18;
-    -webkit-font-smoothing: antialiased;
-    overflow: hidden;
-  }
-  .home {
-    position: fixed; top: 18px; left: 18px;
-    width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
-    border-radius: 50%; background: rgba(255,255,255,0.9); border: 1px solid #ddd9d0;
-    color: #555; text-decoration: none; font-size: 1.1rem; z-index: 50;
-  }
-  .home:hover { background: #fff; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow: hidden; }
+  .home { position: fixed; top: 18px; left: 18px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); color: var(--muted); text-decoration: none; font-size: 1.1rem; z-index: 50; }
+  .home:hover { color: var(--text); }
 
-  /* 가로 스와이프 캐러셀 */
-  .carousel {
-    display: flex;
-    height: 100vh;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-    cursor: grab;
-  }
+  .carousel { display: flex; height: 100vh; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; cursor: grab; align-items: center; gap: 2.5vw; padding: 0 7vw; }
   .carousel::-webkit-scrollbar { display: none; }
   .carousel.dragging { cursor: grabbing; scroll-behavior: auto; }
 
-  .slide {
-    flex: 0 0 86vw;          /* 다음 슬라이드가 우측에 살짝 보이도록 */
-    height: 100vh;
-    scroll-snap-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+  /* 각 슬라이드 = 둥근 사각 프레임(대기 카드) */
+  .slide { flex: 0 0 84vw; height: 86vh; scroll-snap-align: center; }
+  .frame {
+    width: 100%; height: 100%;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; position: relative;
   }
-  .slide:first-child { margin-left: 7vw; }
-  .slide:last-child  { margin-right: 7vw; }
+  .stage { position: relative; width: 92%; max-width: 1100px; aspect-ratio: 16 / 9; }
 
-  .stage {
-    position: relative;
-    width: 100%;
-    max-width: 1180px;
-    aspect-ratio: 16 / 9;
-    max-height: 88vh;
-  }
-
-  /* 폴라로이드 */
-  .polaroid {
-    position: absolute;
-    left: 3%; top: 9%;
-    width: 49%;
-    background: #fff;
-    padding: 1.4% 1.4% 0;
-    border-radius: 4px;
-    box-shadow: 0 22px 50px -18px rgba(0,0,0,0.45);
-    transform: translateX(-130%) rotate(-9deg);
-    opacity: 0;
-    z-index: 2;
-  }
-  .play .polaroid {
-    animation: dropIn 0.8s cubic-bezier(.2,.7,.3,1) forwards;
-  }
-  @keyframes dropIn {
-    from { transform: translateX(-130%) rotate(-9deg); opacity: 0; }
-    to   { transform: translateX(0) rotate(-3.5deg); opacity: 1; }
-  }
-  .photo-wrap { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: visible; }
+  /* 폴라로이드 — 처음부터 그대로(등장 애니 없음) */
+  .polaroid { position: absolute; left: 3%; top: 10%; width: 49%; background: #fff; padding: 1.4% 1.4% 0; border-radius: 4px; box-shadow: 0 22px 50px -18px rgba(0,0,0,0.45); transform: rotate(-3.5deg); z-index: 2; }
+  .photo-wrap { position: relative; width: 100%; aspect-ratio: 16 / 9; }
   .photo-wrap > img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 2px; }
 
-  /* 사진 위 동그라미 (SVG, 손그림 느낌) */
   .circle-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
-  .circle-svg ellipse {
-    fill: none; stroke: #e8402f; stroke-width: 3.2; stroke-linecap: round;
-    pathLength: 100; stroke-dasharray: 100; stroke-dashoffset: 100;
-  }
-  .play .circle-svg ellipse { animation: draw 0.65s ease-out 0.85s forwards; }
+  .circle-svg ellipse { fill: none; stroke: var(--marker); stroke-width: 3.2; stroke-linecap: round; pathLength: 100; stroke-dasharray: 100; stroke-dashoffset: 100; }
+  .play .circle-svg ellipse { animation: draw 0.65s ease-out 0.5s forwards; }
   @keyframes draw { to { stroke-dashoffset: 0; } }
 
-  .pcaption {
-    padding: 7% 4% 9%;
-    font-family: "Nanum Pen Script", "Pretendard", cursive;
-  }
-  .pcaption .place { font-size: clamp(1rem, 1.7vw, 1.5rem); font-weight: 800; }
+  .pcaption { padding: 7% 4% 9%; }
+  .pcaption .place { font-size: clamp(1rem, 1.7vw, 1.5rem); font-weight: 800; color: #1d1b18; }
   .pcaption .date { font-size: clamp(0.8rem, 1.1vw, 1rem); color: #8a857c; margin-top: 2px; }
 
-  /* 화살표 */
   .arrow-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; z-index: 3; pointer-events: none; }
-  .arrow-svg path {
-    fill: none; stroke: #e8402f; stroke-width: 2.6; stroke-linecap: round;
-    pathLength: 100; stroke-dasharray: 100; stroke-dashoffset: 100;
-  }
-  .play .arrow-svg path { animation: draw 0.55s ease-out 1.5s forwards; }
+  .arrow-svg path { fill: none; stroke: var(--marker); stroke-width: 2.6; stroke-linecap: round; pathLength: 100; stroke-dasharray: 100; stroke-dashoffset: 100; }
+  .play .arrow-svg path { animation: draw 0.55s ease-out 1.15s forwards; }
   .arrow-svg .head { opacity: 0; }
-  .play .arrow-svg .head { animation: pop 0.3s ease-out 1.95s forwards; }
+  .play .arrow-svg .head { animation: pop 0.3s ease-out 1.6s forwards; }
   @keyframes pop { from { opacity: 0; } to { opacity: 1; } }
 
-  /* 원형 확대본 */
-  .zoom {
-    position: absolute;
-    right: 2%; top: 8%;
-    width: 30%;
-    aspect-ratio: 1 / 1;
-    border-radius: 50%;
-    background-size: cover;
-    background-position: center;
-    box-shadow: 0 0 0 8px #fff, 0 20px 45px -12px rgba(0,0,0,0.5);
-    transform: scale(0);
-    opacity: 0;
-    z-index: 4;
-  }
-  .play .zoom { animation: zoomPop 0.75s cubic-bezier(.34,1.56,.5,1) 2s forwards; }
-  @keyframes zoomPop {
-    0%   { transform: scale(0); opacity: 0; }
-    60%  { opacity: 1; }
-    100% { transform: scale(1); opacity: 1; }
-  }
+  .zoom { position: absolute; right: 2%; top: 8%; width: 30%; aspect-ratio: 1 / 1; border-radius: 50%; background-size: cover; background-position: center; box-shadow: 0 0 0 8px #fff, 0 20px 45px -12px rgba(0,0,0,0.5); transform: scale(0); opacity: 0; z-index: 4; }
+  .play .zoom { animation: zoomPop 0.75s cubic-bezier(.34,1.56,.5,1) 1.65s forwards; }
+  @keyframes zoomPop { 0% { transform: scale(0); opacity: 0; } 60% { opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
 
-  /* 대사 */
-  .quote {
-    position: absolute;
-    left: 4%; bottom: 4%;
-    max-width: 56%;
-    z-index: 5;
-    font-size: clamp(1.3rem, 2.6vw, 2.4rem);
-    font-weight: 800;
-    line-height: 1.4;
-    letter-spacing: -0.01em;
-    color: #1d1b18;
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  .play .quote { animation: dissolve 0.7s ease-out 2.6s forwards; }
+  .quote { position: absolute; left: 3%; bottom: 3%; max-width: 56%; z-index: 5; font-family: var(--font-head); font-size: clamp(1.3rem, 2.6vw, 2.4rem); font-weight: 800; line-height: 1.4; letter-spacing: -0.01em; color: var(--text); opacity: 0; transform: translateY(16px); }
+  .play .quote { animation: dissolve 0.7s ease-out 2.25s forwards; }
   @keyframes dissolve { to { opacity: 1; transform: translateY(0); } }
 
-  /* 스와이프 힌트 이모지 */
-  .hint {
-    position: fixed;
-    right: 26px; bottom: 50%;
-    font-size: 2.6rem;
-    opacity: 0.22;
-    z-index: 40;
-    pointer-events: none;
-    animation: nudge 1.6s ease-in-out infinite;
-  }
-  @keyframes nudge {
-    0%,100% { transform: translateX(0); opacity: 0.16; }
-    50%     { transform: translateX(14px); opacity: 0.3; }
-  }
+  .hint { position: fixed; right: 26px; top: 50%; font-size: 2.6rem; opacity: 0.22; z-index: 40; pointer-events: none; animation: nudge 1.6s ease-in-out infinite; }
+  @keyframes nudge { 0%,100% { transform: translateX(0); opacity: 0.16; } 50% { transform: translateX(14px); opacity: 0.3; } }
   .hint.hide { opacity: 0; transition: opacity 0.4s; }
 
-  @media (max-width: 760px) {
-    .slide { flex-basis: 88vw; }
-    .quote { font-size: 1.2rem; max-width: 70%; }
-  }
+  @media (max-width: 760px) { .slide { flex-basis: 88vw; } .quote { font-size: 1.2rem; max-width: 70%; } }
 </style>
 </head>
 <body>
@@ -173,37 +79,27 @@
 
   <script>
     const BASE = '../assets/발옷/';
-    // 각 툰: 사진/확대본 + 캡션 + 대사 + 동그라미(사진 기준 %)·화살표(stage viewBox 0-160 x 0-90)
     const TOONS = [
-      {
-        photo: 'toon1-photo.png', zoom: 'toon1-zoom.png',
-        place: '뉴스공장 라이브 투어', date: '2026. 3. 14',
-        quote: '“이거 한 번 신으면\n다른 거 못 신어요”',
-        circle: { cx: 52, cy: 80, rx: 13, ry: 17 },
-        arrow: 'M 78 64 Q 104 40 120 36',
-      },
-      {
-        photo: 'toon2-photo.png', zoom: 'toon2-zoom.png',
-        place: '독일 출장에서', date: '2024. 9. 18',
-        quote: '“다시 나오면\n나도 또 살 거다”',
-        circle: { cx: 80, cy: 62, rx: 11, ry: 15 },
-        arrow: 'M 84 56 Q 108 40 122 36',
-      },
-      {
-        photo: 'toon3-photo.png', zoom: 'toon3-zoom.png',
-        place: '스포츠공장', date: '2026. 4. 2',
-        quote: '“신으면 되게 기분 좋아요\n걸리는 데가 없어서”',
-        circle: { cx: 73, cy: 69, rx: 12, ry: 15 },
-        arrow: 'M 82 58 Q 106 42 120 38',
-      },
+      { photo: 'toon1-photo.png', zoom: 'toon1-zoom.png', place: '뉴스공장 라이브 투어', date: '2026. 3. 14',
+        quote: '“이거 한 번 신으면\n다른 거 못 신어요”', circle: { cx: 52, cy: 80, rx: 13, ry: 17 }, arrow: 'M 78 64 Q 104 40 120 36' },
+      { photo: 'toon2-photo.png', zoom: 'toon2-zoom.png', place: '독일 출장에서', date: '2024. 9. 18',
+        quote: '“다시 나오면\n나도 또 살 거다”', circle: { cx: 80, cy: 62, rx: 11, ry: 15 }, arrow: 'M 84 56 Q 108 40 122 36' },
+      { photo: 'toon3-photo.png', zoom: 'toon3-zoom.png', place: '스포츠공장', date: '2026. 4. 2',
+        quote: '“신으면 되게 기분 좋아요\n걸리는 데가 없어서”', circle: { cx: 73, cy: 69, rx: 12, ry: 15 }, arrow: 'M 82 58 Q 106 42 120 38' },
     ];
+
+    function arrowHead(d) {
+      const nums = d.match(/[-\d.]+/g).map(Number);
+      const ex = nums[nums.length - 2], ey = nums[nums.length - 1];
+      return `M ${ex - 5} ${ey - 1} L ${ex} ${ey} L ${ex - 3} ${ey + 5}`;
+    }
 
     const carousel = document.getElementById('carousel');
     TOONS.forEach((t) => {
       const slide = document.createElement('div');
       slide.className = 'slide';
       slide.innerHTML = `
-        <div class="stage">
+        <div class="frame"><div class="stage">
           <div class="polaroid">
             <div class="photo-wrap">
               <img src="${BASE}${t.photo}" alt="">
@@ -211,10 +107,7 @@
                 <ellipse cx="${t.circle.cx}" cy="${t.circle.cy}" rx="${t.circle.rx}" ry="${t.circle.ry}"></ellipse>
               </svg>
             </div>
-            <div class="pcaption">
-              <div class="place">${t.place}</div>
-              <div class="date">${t.date}</div>
-            </div>
+            <div class="pcaption"><div class="place">${t.place}</div><div class="date">${t.date}</div></div>
           </div>
           <svg class="arrow-svg" viewBox="0 0 160 90" preserveAspectRatio="none">
             <path d="${t.arrow}"></path>
@@ -222,47 +115,32 @@
           </svg>
           <div class="zoom" style="background-image:url('${BASE}${t.zoom}')"></div>
           <div class="quote">${t.quote.replace(/\n/g, '<br>')}</div>
-        </div>`;
+        </div></div>`;
       carousel.appendChild(slide);
     });
 
-    // 화살표 촉(끝점 기준 간이 생성)
-    function arrowHead(d) {
-      const nums = d.match(/[-\d.]+/g).map(Number);
-      const ex = nums[nums.length - 2], ey = nums[nums.length - 1];
-      return `M ${ex - 5} ${ey - 1} L ${ex} ${ey} L ${ex - 3} ${ey + 5}`;
-    }
-
-    // 보이는 슬라이드 애니메이션 재생
     const slides = [...document.querySelectorAll('.slide')];
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
         const stage = e.target.querySelector('.stage');
-        if (e.intersectionRatio > 0.7) {
-          stage.classList.remove('play'); void stage.offsetWidth; stage.classList.add('play');
-        }
+        if (e.intersectionRatio > 0.7) { stage.classList.remove('play'); void stage.offsetWidth; stage.classList.add('play'); }
       });
     }, { threshold: [0, 0.7, 1] });
     slides.forEach((s) => io.observe(s));
 
-    // 힌트는 한 번 넘기면 숨김
     const hint = document.getElementById('hint');
-    carousel.addEventListener('scroll', () => {
-      if (carousel.scrollLeft > 40) hint.classList.add('hide');
-    }, { passive: true });
+    carousel.addEventListener('scroll', () => { if (carousel.scrollLeft > 40) hint.classList.add('hide'); }, { passive: true });
 
-    // 마우스 드래그로도 넘기기
     let down = false, startX = 0, startScroll = 0;
     carousel.addEventListener('mousedown', (e) => { down = true; startX = e.pageX; startScroll = carousel.scrollLeft; carousel.classList.add('dragging'); });
     window.addEventListener('mouseup', () => { down = false; carousel.classList.remove('dragging'); });
     window.addEventListener('mousemove', (e) => { if (down) carousel.scrollLeft = startScroll - (e.pageX - startX); });
-
-    // 키보드 좌우
     window.addEventListener('keydown', (e) => {
-      const w = slides[0].offsetWidth;
+      const w = slides[0].offsetWidth + window.innerWidth * 0.025;
       if (e.key === 'ArrowRight') carousel.scrollBy({ left: w, behavior: 'smooth' });
       if (e.key === 'ArrowLeft') carousel.scrollBy({ left: -w, behavior: 'smooth' });
     });
   </script>
+  <script src="../assets/theme-switch.js"></script>
 </body>
 </html>

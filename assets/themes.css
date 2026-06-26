@@ -1,0 +1,60 @@
+/* 공용 디자인 테마 — 각 페이지는 :root에 기본 토큰을 두고, 아래가 data-theme로 덮어쓴다.
+   토큰: --bg --surface --surface2 --text --muted --border --accent --accent-ink
+        --radius --radius-sm --shadow --font --font-head */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&display=swap');
+
+/* Orderful — 산업용 커맨드 덱: 버밀리언 1포인트 */
+html[data-theme="orderful"] {
+  --bg: #f5f5f5; --surface: #ffffff; --surface2: #1f1f1f;
+  --text: #101828; --muted: #4a5565; --border: #e5e7eb;
+  --accent: #e42b0c; --accent-ink: #ffffff;
+  --radius: 8px; --radius-sm: 8px;
+  --shadow: rgba(0,0,0,0.1) 0 1px 3px 0, rgba(0,0,0,0.1) 0 1px 2px -1px;
+  --font: "Inter", system-ui, -apple-system, sans-serif;
+  --font-head: "Inter", system-ui, sans-serif;
+}
+/* PostHog — 따뜻한 베이지 CRT 데스크톱: 앰버 + 코발트 */
+html[data-theme="posthog"] {
+  --bg: #e1d7c2; --surface: #ffffff; --surface2: #fdfdf8;
+  --text: #111827; --muted: #4d4f46; --border: #d2d3cc;
+  --accent: #f1a82c; --accent-ink: #000000; --accent2: #2f80fa;
+  --radius: 4px; --radius-sm: 4px;
+  --shadow: rgba(0,0,0,0.25) 0 25px 50px -12px;
+  --font: "IBM Plex Sans", system-ui, sans-serif;
+  --font-head: "IBM Plex Sans", system-ui, sans-serif;
+}
+/* Ease Health — 햇살 클리닉: 포레스트 그린 1포인트, 그림자 없음, 세리프 헤드라인 */
+html[data-theme="ease"] {
+  --bg: #fffefc; --surface: #ffffff; --surface2: #e1f4df;
+  --text: #0c0c0c; --muted: #222222; --border: #e5e7eb;
+  --accent: #0f3e17; --accent-ink: #fffefc;
+  --radius: 14px; --radius-sm: 7px;
+  --shadow: none;
+  --font: "Inter", system-ui, sans-serif;
+  --font-head: "Fraunces", Georgia, "Times New Roman", serif;
+}
+
+/* ── 디자인 스위처 (모든 서브페이지 공통) ── */
+.theme-switch {
+  position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); z-index: 100;
+  display: flex; gap: 4px;
+  padding: 4px; border-radius: 999px;
+  background: rgba(255,255,255,0.82);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: 0 6px 20px -8px rgba(0,0,0,0.35);
+  font-family: "Inter", system-ui, sans-serif;
+}
+.theme-switch button {
+  border: none; background: none; cursor: pointer;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.01em;
+  color: #555; padding: 6px 12px; border-radius: 999px;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.theme-switch button:hover { color: #111; }
+.theme-switch button.on { background: #1a1a1a; color: #fff; }
+@media (max-width: 640px) {
+  .theme-switch { bottom: 12px; }
+  .theme-switch button { padding: 6px 9px; font-size: 11px; }
+}
